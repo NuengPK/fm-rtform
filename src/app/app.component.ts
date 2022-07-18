@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'fm-rtform';
+  title = 'Reactive Form Example';
   genders = ['male', 'female'];
 }
