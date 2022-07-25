@@ -1,30 +1,55 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData">
         <div class="row mb-3">
           <label for="username">Username</label>
           <input
             type="text"
             id="username"
+            formControlName = "username"
             class="form-control">
         </div>
+        <span *ngIf="signupForm.get('userData.username')?.errors?.['nameIsForbidden']"
+        class="help-block mb-3">Username is Forbidden !</span>
+        <span *ngIf="signupForm.get('userData.username')?.errors?.['required']"
+        class="help-block mb-3">กรุณาใส่ Username</span>
         <div class="row mb-3">
           <label for="email">email</label>
           <input
             type="text"
             id="email"
+            formControlName = "email"
             class="form-control">
+        </div>
+        <span *ngIf="signupForm.get('userData.email')?.errors?.['required']"
+        class="help-block">กรุณาใส่ Email</span>
+        <span *ngIf="signupForm.get('userData.email')?.errors?.['email']"
+        class="help-block">กรุณาใส่ Email ที่ถูกต้อง</span>
         </div>
         <div class="form-check mb-1" *ngFor="let gender of genders">
           <input
             type="radio"
             class="form-check-input"
+            formControlName = "gender"
             name="gender"
             [value]="gender">
           <label class="form-check-label" > {{ gender }} </label>
         </div>
+        <div class="mb-3" formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-secondary"
+          type="button"
+          (click)="onAddHobby()">Add Hobby</button>
+          <div class="row mt-1" *ngFor="let hobbyControl of controls ; let i = index;">
+          <input type="text" class="form-control" [formControlName]="i"></div>
+        </div>
+        <span *ngIf="!signupForm.valid && signupForm.touched"
+        class="help-block">กรุณาใส่ข้อมูลที่ถูกต้อง</span>
+        <div class="mb-3">
         <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
       </form>
     </div>
   </div>
